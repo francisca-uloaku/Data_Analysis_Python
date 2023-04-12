@@ -38,9 +38,9 @@ txn_conn = create_conn(
 
 pay_conn = create_conn(
     host='host_pay',
-    db='database_pay',
-    user='user_pay',
-    password='password_pay',
+    db='database',
+    user='user',
+    password='password',
     port='port_pay')
 
 wallet_conn = create_conn(
@@ -83,7 +83,7 @@ LEFT JOIN "businessCategory" bc ON b.category=bc.id
 WHERE b.id IN {}
 """.format(business)
 
-business_industry = pull_data_from_db(query=sq2, connection=kippa_conn)
+business_industry = pull_data_from_db(query=sq2, connection=try_conn)
 
 all_details=pd.merge(business_industry, all_time_payment_use, on='business', how='outer', indicator=True)
 
