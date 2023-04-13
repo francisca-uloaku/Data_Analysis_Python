@@ -21,7 +21,7 @@ def pull_data_from_db(query, connection):
     return data
 
 
-kippa_conn = create_conn(
+try_conn = create_conn(
     host='host',
     db='database',
     user='user',
@@ -70,7 +70,7 @@ virtualaccount
 WHERE business_id IN ('{}')
 """.format(user[0])
 
-user_details= pull_data_from_db(query=sq2, connection=tip_conn)
+user_details= pull_data_from_db(query=sq2, connection=try_conn)
 
 sq3="""
 SELECT p.phone_number, 
@@ -82,7 +82,7 @@ ON p.id=b.owner
 WHERE b.id IN ('{}');
 """.format(user[0])
 
-other_details = pull_data_from_db(query=sq3, connection=tip_conn)
+other_details = pull_data_from_db(query=sq3, connection=try_conn)
 
 full_details = pd.merge(user_details, other_details, on='business', how='left', indicator=False)
 
