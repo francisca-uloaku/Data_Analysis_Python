@@ -45,8 +45,8 @@ def onboarding_stat():
 
 
     # Onyin's file
-    merchants= pd.read_csv("https://docs.google.com/spreadsheets/d/e/"+"2PACX-1vRpQwnrOHf7oj6UF06uZUL-toAMZcahh6E5soHHJs9-0_1D6yngr5OZCZp"+
-    "-YZufy-ndr9NQpTqTZt8Z/pub?gid=0&single=true&output=csv")
+    merchants= pd.read_csv("https://docs.google.com/spreadsheets/d/e/"+"......-toAMZcahh6E5soHHJs9-0_1D6yngr5OZCZp"+
+    "......")
 
     merchants = merchants.drop_duplicates('Full Number', keep='first')
 
@@ -62,7 +62,7 @@ def onboarding_stat():
 
     numbers = tuple(merchants['Full Number'].unique())
 
-    # acc_num = tuple(merchants['Kippa Account Number'].unique())
+    # acc_num = tuple(merchants['Account Number'].unique())
 
     acc_num = tuple(merchants['Full Number'].unique())
 
@@ -75,13 +75,7 @@ def get_merchant_details():
     numbers=onboarding_stat()[1]
     account_number=onboarding_stat()[2]
 
-    acc_nu= (8225865782, 
-        8229983528, 
-        8225884217, 
-        8225320741, 
-        8220409733,
-        8223350553,
-        8221222437
+    acc_nu= (8......,
         )
 
     sq="""
