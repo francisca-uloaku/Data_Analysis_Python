@@ -21,7 +21,7 @@ def pull_data_from_db(query, connection):
     return data
 
 
-kippa_conn = create_conn(
+try_conn = create_conn(
     host="host", db="database", user="user", password="password", port="port"
 )
 
@@ -67,7 +67,7 @@ WHERE b.owner IN (
 ORDER BY 2 DESC,1
 """
 
-merchants_data = pull_data_from_db(query=sq, connection=kippa_conn)
+merchants_data = pull_data_from_db(query=sq, connection=try_conn)
 
 business_ids = tuple(merchants_data["business"])
 
@@ -82,7 +82,7 @@ WHERE business_id IN {}
     business_ids
 )
 
-account_details = pull_data_from_db(query=sq2, connection=kippa_conn)
+account_details = pull_data_from_db(query=sq2, connection=try_conn)
 
 merchants_details = pd.merge(
     merchants_data, account_details, on="business", how="outer"
@@ -137,7 +137,7 @@ SELECT t.id as business,
 FROM person p 
 JOIN TEMP3 t ON t.id=p.id
 """
-business_with_3 = pull_data_from_db(query=sq4, connection=kippa_conn)
+business_with_3 = pull_data_from_db(query=sq4, connection=try_conn)
 
 sq5 = """
 WITH TEMP AS (
@@ -165,7 +165,7 @@ WHERE t.created_by IN
 AND t.created_at::DATE BETWEEN '2022-02-01' AND '2022-05-31'
 """
 
-active_merchants = pull_data_from_db(query=sq5, connection=kippa_conn)
+active_merchants = pull_data_from_db(query=sq5, connection=try_conn)
 
 active_status = pd.merge(business_with_3, active_merchants, on="business", how="outer")
 
