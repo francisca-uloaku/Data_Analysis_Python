@@ -82,21 +82,21 @@ df.to_excel("Alltime_details_type_yest.xlsx",
              sheet_name='Business_type') 
 
 
-# data=tuple(df['business'])
-# sq="""
-# SELECT b.id, 
-#     p.first_name, 
-#     p.last_name, 
-#     p.phone_number 
-# FROM PERSON p 
-# JOIN business b ON p.id=b.owner 
-# WHERE b.id in {};""".format(data)
-# df = pd.read_sql(sq,conn)
+data=tuple(df['business'])
+sq="""
+SELECT b.id, 
+    p.first_name, 
+    p.last_name, 
+    p.phone_number 
+FROM PERSON p 
+JOIN business b ON p.id=b.owner 
+WHERE b.id in {};""".format(data)
+df = pd.read_sql(sq,conn)
 
 
-# df.to_excel("Details.xlsx",
-#              sheet_name='Details_User')  
-# print('DataFrame is written successfully to Excel File.')
+df.to_excel("Details.xlsx",
+             sheet_name='Details_User')  
+print('DataFrame is written successfully to Excel File.')
 
-# df.to_csv('transaction_details.csv', index=False)
-# print('DataFrame is written successfully to CSV File.')
+df.to_csv('transaction_details.csv', index=False)
+print('DataFrame is written successfully to CSV File.')
