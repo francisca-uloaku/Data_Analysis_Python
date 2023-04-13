@@ -49,7 +49,7 @@ wallet_conn = create_conn(
     password='password_wal',
     port='port_wal')
 
-reference='PYSTK_20221019_19818978'
+reference='19718978'
 
 sq = """
 SELECT *
@@ -62,15 +62,15 @@ data = pull_data_from_db(query=sq, connection=pay_conn)
 user = data['business']
 
 sq2="""
-SELECT CONCAT(first_name, ' ', last_name) as kippa_full_name,
-    account_number as kippa_account_number,
+SELECT CONCAT(first_name, ' ', last_name) as _full_name,
+    account_number as _account_number,
     business_id as business
 FROM 
 virtualaccount 
 WHERE business_id IN ('{}')
 """.format(user[0])
 
-user_details= pull_data_from_db(query=sq2, connection=kippa_conn)
+user_details= pull_data_from_db(query=sq2, connection=tip_conn)
 
 sq3="""
 SELECT p.phone_number, 
@@ -82,7 +82,7 @@ ON p.id=b.owner
 WHERE b.id IN ('{}');
 """.format(user[0])
 
-other_details = pull_data_from_db(query=sq3, connection=kippa_conn)
+other_details = pull_data_from_db(query=sq3, connection=tip_conn)
 
 full_details = pd.merge(user_details, other_details, on='business', how='left', indicator=False)
 
