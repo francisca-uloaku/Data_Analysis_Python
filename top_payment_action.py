@@ -21,7 +21,7 @@ def pull_data_from_db(query, connection):
     return data
 
 
-kippa_conn = create_conn(
+try_conn = create_conn(
     host='host',
     db='database',
     user='user',
@@ -84,7 +84,7 @@ WHERE b.state='Lagos'
 AND b.id IN {}; 
 """.format(payment_users)
 
-payment_user_details=pull_data_from_db(query=sq2, connection=kippa_conn)
+payment_user_details=pull_data_from_db(query=sq2, connection=try_conn)
 
 payment_details=pd.merge(payment_user_details, payment_record, on='business', how='left', indicator=True)
 
@@ -135,7 +135,7 @@ ORDER BY 2 DESC
 LIMIT 1000
 """
 
-action= pull_data_from_db(query=sq3, connection=kippa_conn)
+action= pull_data_from_db(query=sq3, connection=try_conn)
 action=action.dropna()
 users=tuple(action['id'])
 
@@ -158,7 +158,7 @@ WHERE b.state='Lagos'
 AND p.id IN {}; 
 """.format(users)
 
-action_details = pull_data_from_db(query=sq4, connection=kippa_conn)
+action_details = pull_data_from_db(query=sq4, connection=try_conn)
 
 action_users = pd.merge(action_details, action, on='id', how='left', indicator=True)
 
