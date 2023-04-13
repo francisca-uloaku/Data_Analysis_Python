@@ -1,4 +1,4 @@
-from kippa_start_app import get_application_data
+from try_art_app import get_application_data
 from decouple import config
 import requests
 import json
