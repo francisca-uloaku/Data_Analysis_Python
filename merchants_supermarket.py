@@ -45,9 +45,9 @@ def onboarding_stat():
 
 
     # Onyin's file
-    merchants= pd.read_csv("https://docs.google.com/spreadsheets/d/e/" +
-    "2PACX-1vSVqngDilxQvljTXopQIv0W4CI4DtUP9Om3GfE4v79mfHHGh_" +
-    "5dweEZi3CJpQ6GTffEhKV8u7NBjvK8/pub?gid=1826429313&single=true&output=csv", 
+    merchants= pd.read_csv("https://docs.google.com/spreadsheets" +
+    "2PA......" +
+    "ut=csv", 
     header=[1])
 
     merchants = merchants.drop_duplicates('Full Number', keep='first')
