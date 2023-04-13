@@ -23,8 +23,11 @@ def pull_data_from_db(query, connection):
     return data
 
 
-kippa_conn = create_conn(
-    host="host", db="database", user="user", password="password", port="port"
+try_conn = create_conn(
+    host="host", db="database",
+    user="user", 
+    password="password", 
+    port="port"
 )
 
 query = """
@@ -38,17 +41,17 @@ SELECT first_name,
     email_verified,
     created_at
 FROM person
-WHERE source='KIPPA-START'
+WHERE source='GOOGLE'
 AND created_at::DATE >= '2022-12-19'
 ORDER BY 8 DESC;
 """
 
-data = pull_data_from_db(query=query, connection=kippa_conn)
+data = pull_data_from_db(query=query, connection=try_conn)
 
-paystack = pd.read_csv("/Users/macbook/Desktop/Programs/DB_scripts/Paystack.csv")
+dta = pd.read_csv("/Users.......csv")
 
 
-df = paystack.rename(columns={"Customer (email)": "email"})
+df = dta.rename(columns={"Customer (email)": "email"})
 
 df["ref_length"] = df["Reference"].apply(lambda x: len(x))
 
@@ -56,7 +59,7 @@ df["first_five"] = df["Reference"].str[:5]
 
 df = df[df["ref_length"] <= 23]
 
-filter_values = ["PYSTK"]
+filter_values = ["GST"]
 
 df = df[~df["first_five"].str.upper().isin(filter_values)]
 
