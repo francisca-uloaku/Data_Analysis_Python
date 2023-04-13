@@ -22,7 +22,7 @@ conn2 = psycopg2.connect(
     port = config('port_tran')) 
 cursor2 = conn2.cursor()
 
-merchants= pd.read_csv("https://docs.google.com/spreadsheets/d/e/" +"2PACX-1vSdoLhKv_LWSw-eu1R_m-fA2Iws3hNHCMjqgfgaDz3hdA8HL9yrFjd38p2qnxzEj-9Mbe5QwukVzz6C/pub?gid=0&single=true&"+"output=csv")
+merchants= pd.read_csv("https://....../d/e/" +"...........true&"+".....put=csv")
 
 merchants['Date'].fillna(method='ffill', inplace=True)
 merchants['Date'] = pd.to_datetime(merchants['Date'])
