@@ -22,7 +22,7 @@ def pull_data_from_db(query, connection):
     return data
 
 
-kippa_conn = create_conn(
+try_conn = create_conn(
     host='host',
     db='database',
     user='user',
@@ -51,7 +51,7 @@ wallet_conn = create_conn(
     port='port_wal')
 
 
-email= 'udoka000@gmail.com'
+email= 'yzy@gmail.com'
 
 sq="""
 SELECT b.id,
@@ -68,7 +68,7 @@ JOIN virtualaccount v ON b.id=v.business_id
 WHERE p.email ILIKE '{}'
 """.format(email)
 
-userdetails = pull_data_from_db(query=sq, connection=kippa_conn)
+userdetails = pull_data_from_db(query=sq, connection=try_conn)
 
 business= userdetails['business']
 business = str(business[0])
@@ -101,7 +101,7 @@ SELECT type,
     gross, 
     business,
     "fundingId",
-    "dvaId"
+    "Id"
 FROM transaction
 Where business = '{}';
 """.format(business) 
