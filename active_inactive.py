@@ -26,7 +26,7 @@ def pull_data_from_db(query, connection):
     return data
 
 
-kippa_conn = create_conn(
+try_conn = create_conn(
     host="host", db="database", user="user", password="password", port="port"
 )
 
@@ -79,7 +79,7 @@ FROM TEMP t
 WHERE t.created_at::DATE>='2021-06-01';
 """
 
-All_active_users = pull_data_from_db(query=sq, connection=kippa_conn)
+All_active_users = pull_data_from_db(query=sq, connection=try_conn)
 
 All_active_users = All_active_users.dropna()
 
@@ -93,9 +93,9 @@ WHERE p.id IN {}
     id
 )
 
-# active_users_phone= pull_data_from_db(query=sq2, connection=kippa_conn)
+# active_users_phone= pull_data_from_db(query=sq2, connection=try_conn)
 
-active_users_phone = pd.read_sql(sq2, kippa_conn)
+active_users_phone = pd.read_sql(sq2, try_conn)
 
 active_users_phone.to_csv("Active_users.csv", index=False)
 
@@ -110,8 +110,8 @@ WHERE p.id IN {}
     id
 )
 
-# inactive_users_phone= pull_data_from_db(query=sq3, connection=kippa_conn)
+# inactive_users_phone= pull_data_from_db(query=sq3, connection=try_conn)
 
-inactive_users_phone = pd.read_sql(sq3, kippa_conn)
+inactive_users_phone = pd.read_sql(sq3, try_conn)
 
 inactive_users_phone.to_csv("Inactive_users.csv", index=False)
