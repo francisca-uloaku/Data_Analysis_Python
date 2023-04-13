@@ -44,15 +44,15 @@ def onboarding_stat():
     stat=dict()
 
 
-    # Onyin's file
-    merchants= pd.read_csv("https://docs.google.com/spreadsheets/d/e/"+"......-toAMZcahh6E5soHHJs9-0_1D6yngr5OZCZp"+
+    # add file
+    merchants= pd.read_csv("https://docs.google.com/spreadsheets"+"......-OZCZp"+
     "......")
 
     merchants = merchants.drop_duplicates('Full Number', keep='first')
 
     # merchants['Date'].fillna(method='ffill', inplace=True)
     # merchants['Date'] = pd.to_datetime(merchants['Date'])
-    # merchants['Kippa Account number'].fillna(method='ffill', inplace=True)
+    # merchants['Account number'].fillna(method='ffill', inplace=True)
     merchants['Full Number'].fillna(method='ffill', inplace=True)
     merchants = merchants[merchants['Full Number'] != 'FALSE']
 
