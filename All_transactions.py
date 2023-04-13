@@ -13,7 +13,7 @@ conn = psycopg2.connect(
 cursor = conn.cursor()
 
 
-# data = pd.read_csv('Fairmoney  - fairmoney.csv')
+# data = pd.read_csv('aironey  - money.csv')
 # id=tuple(data['id'])
 sq="""
 WITH TEMP AS(
