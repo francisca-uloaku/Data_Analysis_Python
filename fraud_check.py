@@ -21,7 +21,7 @@ def pull_data_from_db(query, connection):
     return data
 
 
-kippa_conn = create_conn(
+try_conn = create_conn(
     host='host',
     db='database',
     user='user',
@@ -51,10 +51,10 @@ wallet_conn = create_conn(
 
 def get_business_id():
 
-    data=pd.read_csv("https://docs.google.com/spreadsheets/d/e/"+"2PACX-1vQ6qCWs35deEfEtUmo2znGQ8Qlpf8o32ikB3meeyAGLf8v44CYSyzCWo-"+
-    "dOonwgfaE6jZYn5zgR_Bpa/pub?gid=345397585&single=true&output=csv")
+    data=pd.read_csv("https://docs.google.com/spreadsheets/"+"2................."+
+    "hg...............=csv")
 
-    acc_num = tuple(data['Kippa_Account_Number'].unique())
+    acc_num = tuple(data['try_Account_Number'].unique())
 
     sq="""
     SELECT business_id, 
@@ -63,7 +63,7 @@ def get_business_id():
     WHERE account_number::BIGINT IN {}
     """.format(acc_num)
 
-    business=pull_data_from_db(query=sq, connection=kippa_conn)
+    business=pull_data_from_db(query=sq, connection=try_conn)
 
     business_id=tuple(business['business_id'].unique())
 
@@ -98,7 +98,7 @@ SELECT type,
     gross, 
     business,
     "fundingId",
-    "dvaId"
+    "Id"
 FROM transaction
 Where business IN {}
 --AND status = '00'
@@ -127,14 +127,14 @@ ben_details = pull_data_from_db(query=sq3, connection=txn_conn)
 user_business=tuple(bank_transfer['business'])
 
 sq_3="""
-SELECT CONCAT(first_name, ' ', last_name) as kippa_full_name,
+SELECT CONCAT(first_name, ' ', last_name) as t_full_name,
     account_number as kippa_account_number,
     business_id as business
 FROM virtualaccount
 WHERE business_id IN {}
 """.format(user_business)
 
-bank_acct= pull_data_from_db(query=sq_3, connection=kippa_conn)
+bank_acct= pull_data_from_db(query=sq_3, connection=try_conn)
 
 sq_2_="""
 SELECT p.phone_number, 
@@ -146,7 +146,7 @@ ON p.id=b.owner
 WHERE b.id IN {};
 """.format(user_business)
 
-other_details= pull_data_from_db(query=sq_2_, connection=kippa_conn)
+other_details= pull_data_from_db(query=sq_2_, connection=try_conn)
 
 bank_transfer_deeds = pd.merge(bank_transfer, ben_details, on='reference', how='outer')
 
@@ -163,14 +163,14 @@ all_details_bank=all_details_bank[['type',
                                             'Beneficiary name',
                                             'Beneficiary bank',
                                             'account_number',
-                                            'kippa_full_name',
-                                            'kippa_account_number',
+                                            't_full_name',
+                                            't_account_number',
                                             'phone_number',
                                             'email',
                                             'status',
                                             'current_balance']]
                                             
-all_details_bank=all_details_bank.sort_values('kippa_account_number', ascending=False)
+all_details_bank=all_details_bank.sort_values('t_account_number', ascending=False)
 all_details_bank.to_csv('bank_transfer_details.csv', index=False)
 
 sq4="""
@@ -182,7 +182,7 @@ SELECT type,
     gross, 
     business,
     "fundingId",
-    "dvaId"
+    "Id"
 FROM transaction
 Where business IN {}
 --AND status = '00'
@@ -193,8 +193,8 @@ AND type='dedicated_virtual_account'
 
 dva_transaction= pull_data_from_db(query=sq4, connection=txn_conn)
 
-dva_reference= tuple(dva_transaction['reference'])
-dva_business=tuple(dva_transaction['business'])
+dva_reference= tuple(ua_transaction['reference'])
+dva_business=tuple(ua_transaction['business'])
 
 sq5= """
 SELECT
@@ -211,14 +211,14 @@ dva_details=pull_data_from_db(query=sq5, connection=pay_conn)
 
 
 sq6="""
-SELECT CONCAT(first_name, ' ', last_name) as kippa_full_name,
-    account_number as kippa_account_number,
+SELECT CONCAT(first_name, ' ', last_name) as t_full_name,
+    account_number as t_account_number,
     business_id as business
 FROM virtualaccount
 WHERE business_id IN {}
-""".format(dva_business)
+""".format(ua_business)
 
-dva_bank_acct= pull_data_from_db(query=sq_3, connection=kippa_conn)
+ua_bank_acct= pull_data_from_db(query=sq_3, connection=try_conn)
 
 sq7="""
 SELECT p.phone_number, 
@@ -228,35 +228,35 @@ FROM person p
 INNER JOIN business b
 ON p.id=b.owner
 WHERE b.id IN {};
-""".format(dva_business)
+""".format(ua_business)
 
-dva_other_details= pull_data_from_db(query=sq7, connection=kippa_conn)
+dva_other_details= pull_data_from_db(query=sq7, connection=try_conn)
  
-dva_trans_details= pd.merge(dva_transaction, dva_details, on='reference', how='outer')
+dva_trans_details= pd.merge(ua_transaction, ua_details, on='reference', how='outer')
 
-dva_user_details =pd.merge(dva_bank_acct, dva_other_details, on='business', how='outer')
+dva_user_details =pd.merge(ua_bank_acct, ua_other_details, on='business', how='outer')
 
-dva_full_details = pd.merge(dva_trans_details, dva_user_details, on='business', how='inner')
+dva_full_details = pd.merge(ua_trans_details, ua_user_details, on='business', how='inner')
 
-all_details_dva = pd.merge(dva_full_details, suspect, on='business', how='inner')
+all_details_ua = pd.merge(ua_full_details, suspect, on='business', how='inner')
 
 
-all_details_dva=all_details_dva[['type',
+all_details_ua=all_details_dva[['type',
                                     'amount',
                                     'created_at',
                                     'reference',
                                     'Sender name',
                                     'Sender bank',
                                     'Sender Account Number',
-                                    'kippa_full_name',
-                                    'kippa_account_number',
+                                    't_full_name',
+                                    't_account_number',
                                     'phone_number',
                                     'email',
                                     'status',
                                     'current_balance']]
 
-all_details_dva=all_details_dva.sort_values('kippa_account_number', ascending=False)
+all_details_ua=all_details_dva.sort_values('t_account_number', ascending=False)
 
-all_details_dva.to_csv("dva_full_details.csv", index=False)
+all_details_ua.to_csv("ua_full_details.csv", index=False)
 
 
