@@ -22,7 +22,7 @@ def pull_data_from_db(query, connection):
     data = pd.read_sql(query, connection)
     return data
 
-kippa_conn = create_conn(
+try_conn = create_conn(
     host='host',
     db='database',
     user='user',
