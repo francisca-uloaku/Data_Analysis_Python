@@ -6,7 +6,7 @@ application = load_items("application")
 # result = application[0].data
 
 
-read_file = open("/Users/macbook/Desktop/Kippa/data-platform-reporting-server/apps/bizreg-staging/Paystack.json", 'r')
+read_file = open("/.......json", 'r')
 data = json.load(read_file)
 user_details = data.get("data")
 
@@ -14,12 +14,12 @@ user_details = data.get("data")
 
 # print(value)
 
-paystack_data ={i.get("email"):i for i in user_details}
+stack_data ={i.get("email"):i for i in user_details}
 
 
-# print(paystack_data)
+# print(stack_data)
 result = {}
-for i, j in paystack_data.items():
+for i, j in stack_data.items():
     for b in application:
         if i == b.data.get("email"):
             b.data['ps_data'] = j
@@ -51,17 +51,17 @@ NAVBAR = (
 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
     <li class="nav-item">
         <a href="#" class="nav-link align-middle px-0" style="color: yellow; font-size: large;">
-            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" onclick="javascript:hotReloadSection('Initial Review')">📁 Initial Review ({stats.get('UNPROCESSED_COUNT')})</span>
+            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" onclick="javascript:hotReloadSection('Initial Review')">📁 Review ({stats.get('UNPROCESSED_COUNT')})</span>
         </a>
     </li>
     <li class="nav-item">
         <a href="#" class="nav-link align-middle px-0" style="color: yellow; font-size: large;">
-            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" onclick="javascript:hotReloadSection('Awaiting Submission')">📬 Awaiting Submission ({stats.get('AWAITING_SUBMISSION_COUNT')})</span>
+            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" onclick="javascript:hotReloadSection('Awaiting Submission')">📬 Submission ({stats.get('AWAITING_SUBMISSION_COUNT')})</span>
         </a>
     </li>
     <li class="nav-item">
         <a href="#" class="nav-link align-middle px-0" style="color: yellow; font-size: large;">
-            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" onclick="javascript:hotReloadSection('Awaiting Approval')">📬 Awaiting Approval ({stats.get('AWAITING_APPROVAL_COUNT')})</span>
+            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" onclick="javascript:hotReloadSection('Awaiting Approval')">📬 Approval ({stats.get('AWAITING_APPROVAL_COUNT')})</span>
         </a>
     </li>
     <li class="nav-item">
@@ -94,8 +94,8 @@ NAVBAR = (
 )
 
 icon_stage = ["📁 Initial Review", 
-    "📬 Awaiting Submission", 
-    "📬 Awaiting Approval",
+    "📬 Submission", 
+    "📬 Approval",
     "❓ Queried",
     "📁 Refunded",
     "📁 Deleted",
