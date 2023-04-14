@@ -1,6 +1,6 @@
 # Data_Analysis_Python
 
-<h1 align="center"> Hi,<img style="width: 35px;" src="https://raw.githubusercontent.com/ABSphreak/ABSphreak/master/gifs/Hi.gif" alt=""> Everyone <a href="https://reliable-llama-c038f5.netlify.app/" target="_blank"> Welcome </a></h1> 
+<h1 align="center"> Hi,<img style="width: 35px;" src="https://raw.githubusercontent.com/ABSphreak/ABSphreak/master/gifs/Hi.gif" alt=""> Everyone Welcome </h1> 
 
 This repository contains data analysis and prediction examples written with Python.
 
